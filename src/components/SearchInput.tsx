@@ -1,4 +1,8 @@
+import Icon from "@chakra-ui/icon";
+import { Input } from "@chakra-ui/input";
+import { Divider, List, ListIcon, ListItem, Stack } from "@chakra-ui/layout";
 import React, { useState } from "react";
+import { MdCheckCircle } from "react-icons/md";
 
 interface IhandleSearch {
   handleSearch: () => void;
@@ -40,7 +44,7 @@ let allCoins: CoinType[] = [
   },
   {
     id: 7,
-    name: "BCHA",
+    name: "BCHA / BUSD",
   },
   {
     id: 8,
@@ -184,11 +188,11 @@ let allCoins: CoinType[] = [
   },
   {
     id: 43,
-    name: "PHA",
+    name: "PHA / BUSD",
   },
   {
     id: 44,
-    name: "VIDT",
+    name: "VIDT / BUSD",
   },
   {
     id: 45,
@@ -208,7 +212,7 @@ let allCoins: CoinType[] = [
   },
   {
     id: 49,
-    name: "XVS",
+    name: "",
   },
   {
     id: 50,
@@ -240,7 +244,7 @@ let allCoins: CoinType[] = [
   },
   {
     id: 57,
-    name: "FOR",
+    name: "FOR / BUSD",
   },
   {
     id: 58,
@@ -280,7 +284,7 @@ let allCoins: CoinType[] = [
   },
   {
     id: 67,
-    name: "BIFI",
+    name: "BIFI / BUSD",
   },
   {
     id: 68,
@@ -382,11 +386,16 @@ let allCoins: CoinType[] = [
     id: 92,
     name: "STX",
   },
+  {
+    id: 93,
+    name: "IDEX / BUSD",
+  },
 ];
 
 const SearchInput = () => {
   const [coins, setCoins] = useState<CoinType[]>([]);
   const [coin, setCoin] = useState<string>("");
+  const [fixed, setFixed] = useState<boolean>(false);
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -402,18 +411,52 @@ const SearchInput = () => {
 
     setCoins(result);
   };
+
+  const handleCheckbox = (id) => {
+    console.log(id);
+    setFixed(!fixed);
+  };
   return (
     <div>
-      <input type="text" value={coin} onChange={handleSearch} />
+      <Stack spacing={3}>
+        <Input
+          variant="filled"
+          placeholder="Search Coin"
+          size="md"
+          value={coin}
+          onChange={handleSearch}
+        />
+      </Stack>
 
       <div>
-        <ul>
+        <List spacing={4} mt={5}>
           {coins.length > 0 ? (
-            coins.map((coin) => <li key={coin.id}>{coin.name}</li>)
+            coins.map((coin) => (
+              <div key={coin.id} style={{ display: "flex" , padding:"4px 0 "}}>
+                {/* <input
+                  type="checkbox"
+                  checked={fixed}
+                  onChange={() => handleCheckbox(coin.id)}
+                /> */}
+
+                <ListItem>
+                  <div style={{ display: "flex" }}>
+                    <ListIcon
+                      key={coin.id}
+                      as={MdCheckCircle}
+                      color="green.500"
+                    />
+                    {coin.name}
+                  </div>
+                </ListItem>
+
+                <Divider />
+              </div>
+            ))
           ) : (
             <div>No result found</div>
           )}
-        </ul>
+        </List>
       </div>
     </div>
   );
