@@ -380,21 +380,22 @@ let allCoins: CoinType[] = [
   },
   {
     id: 92,
-    name: "Stx",
+    name: "STX",
   },
 ];
 
 const SearchInput = () => {
   const [coins, setCoins] = useState<CoinType[]>([]);
+  const [coin, setCoin] = useState<string>("");
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
 
     let input = e.target as HTMLInputElement;
 
     let value = input.value;
-
-    let result: CoinType[] = allCoins.filter(
-      (coin: CoinType) => coin.name.toLowerCase() === value.toLowerCase()
+    setCoin(value);
+    let result: CoinType[] = allCoins.filter((coin: CoinType) =>
+      coin.name.toLowerCase().includes(value.toLowerCase())
     );
 
     console.log(result);
@@ -403,11 +404,15 @@ const SearchInput = () => {
   };
   return (
     <div>
-      <input type="text" onChange={handleSearch} />
+      <input type="text" value={coin} onChange={handleSearch} />
 
       <div>
         <ul>
-          {coins && coins.map((coin) => <li key={coin.id}>{coin.name}</li>)}
+          {coins.length > 0 ? (
+            coins.map((coin) => <li key={coin.id}>{coin.name}</li>)
+          ) : (
+            <div>No result found</div>
+          )}
         </ul>
       </div>
     </div>

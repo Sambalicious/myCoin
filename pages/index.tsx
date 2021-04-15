@@ -1,12 +1,11 @@
-import Home from "../src/components/home/Home"
-import Layout from "../src/components/layouts/layout"
-
+import Home from "../src/components/home/Home";
+import Wrapper from "../src/components/layouts/Wrapper";
 
 export default function App() {
   return (
-    
-    <Layout>
+    <Wrapper>
       <Home />
-    </Layout>
+    </Wrapper>
   );
 }
+
