@@ -1,14 +1,7 @@
 import { Checkbox } from "@chakra-ui/checkbox";
 import Icon from "@chakra-ui/icon";
 import { Input } from "@chakra-ui/input";
-import {
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-  Button,
-} from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import {
   Box,
   Divider,
@@ -17,25 +10,17 @@ import {
   ListItem,
   Spacer,
   Stack,
+  ListIcon,
 } from "@chakra-ui/layout";
 import React, { useEffect, useState } from "react";
 import { allCoins } from "./mycoins";
 import { CoinType } from "../../types";
 import { _getFromLocalStorage, _postToLocalStorage } from "./helpers/utils";
-
-interface IhandleSearch {
-  handleSearch: () => void;
-}
-
-// interface filter {
-//   filter: (a: CoinType) => string[];
-// }
+import { MdSettings } from "react-icons/md";
 
 const SearchInput = () => {
   const [coins, setCoins] = useState<CoinType[]>(allCoins);
   const [coin, setCoin] = useState<string>("");
-  const [fixed, setFixed] = useState<boolean>(false);
-  const [status, setStatus] = useState("sold");
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,23 +40,11 @@ const SearchInput = () => {
 
   const handleCoinStatus = (status: string, id: number) => {
     const coins = [...allCoins];
-
     const coinIndex = coins.findIndex((coin) => coin.id === id);
-
     coins[coinIndex].status = status;
 
     const newCoinStatus = [...coins];
     setCoins(newCoinStatus);
-
-    // allOrderProduct[productIndex].Quantity =
-    // //     Number(item.Quantity || 0) + Number(quantity);
-    // //   const newProducts = [...allOrderProduct];
-    // //   setCartItems(newProducts);
-
-    // const index = coins[id + -1];
-
-    setStatus(status === "bought" ? "bought" : "sold");
-
     _postToLocalStorage("myCoins", newCoinStatus);
   };
 
@@ -82,43 +55,40 @@ const SearchInput = () => {
 
   useEffect(() => {
     getAllCoins();
-  }, [status]);
+  }, []);
 
-  // const handleBought = (id: number) => {
-  //   console.log(id);
-  //   setStatus("bought");
-  // };
-
-  // const handleSold = (id: number) => {
-  //   console.log(id);
-  //   setStatus("sold");
-  // };
-
-  const handleCheckbox = (e) => {
-    console.log("shot fired", e?.target?.checked);
-    setFixed(!fixed);
-  };
-  console.log(status);
   return (
     <div>
       <Stack spacing={3}>
-        <Input
-          variant="filled"
-          placeholder="Search Coin"
-          size="md"
-          value={coin}
-          onChange={handleSearch}
-        />
+        <Box
+          bg="#fff"
+          py="10"
+          px="5"
+          zIndex="99"
+          w="100%"
+          left="0"
+          boxShadow="2xl"
+          position="fixed"
+          top="0"
+        >
+          <Input
+            variant="filled"
+            placeholder="Search Coin"
+            size="md"
+            value={coin}
+            onChange={handleSearch}
+          />
+        </Box>
       </Stack>
 
       <div>
-        <List spacing={4} mt={5} w="100%">
-          {coins ? (
+        <List spacing={4} mt={20} w="100%">
+          {coins.length > 0 ? (
             coins.map((coin) => (
               <Flex py={4} w="100%" key={coin.id}>
                 <ListItem>
                   <Flex display="flex" justify="space-between" align="center">
-                    <Box w="100%">
+                    <Box display="flex" w="100%">
                       {/* <Checkbox
                         size="md"
                         colorScheme="green"
@@ -129,7 +99,14 @@ const SearchInput = () => {
                     <ListIcon key={coin.id} color="green.500" />
                     {coin.name}
                   </div> */}
-                      <Box p={1}>{coin.name}</Box>
+                      <ListIcon
+                        key={coin.id}
+                        as={MdSettings}
+                        color="green.500"
+                      />
+                      <Flex flex={1} p={1}>
+                        {coin.name}
+                      </Flex>
                     </Box>
 
                     <Spacer />

@@ -109,7 +109,7 @@ export const allCoins: CoinType[] = [
   },
   {
     id: 22,
-    name: "NPXS",
+    name: "PUNDIX",
     status: "sold",
   },
   {
@@ -345,7 +345,7 @@ export const allCoins: CoinType[] = [
   {
     id: 69,
     name: "SFP",
-    status: "",
+    status: "sold",
   },
   {
     id: 70,
@@ -385,7 +385,7 @@ export const allCoins: CoinType[] = [
   {
     id: 77,
     name: "KAVA",
-    status: "sold"
+    status: "sold",
   },
   {
     id: 78,
