@@ -1,5 +1,5 @@
 import React from "react";
-import SearchInput from "../SearchInput";
+import SearchCoin from "../SearchCoin";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -10,7 +10,7 @@ const Wrapper = styled.div`
 const Home = () => {
   return (
     <Wrapper>
-      <SearchInput />
+      <SearchCoin />
     </Wrapper>
   );
 };
